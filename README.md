@@ -1,2 +1,2 @@
-# ReconstructionChallenge
+# Reconstruction Challenge
 Reconstruction Challenge
