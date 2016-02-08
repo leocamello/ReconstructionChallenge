@@ -7,17 +7,20 @@ Created on Fri Feb 08 14:00:00 2016
 @author: Leonardo Nascimento
 """
 
-import sys, csv, image
+import sys
+import image
 
-from OpenGL.GLUT import *
 from OpenGL.GL import *
+from OpenGL.GLUT import *
+
+from app import Application
 
 
 WINDOW_SIZE = 1024, 768
 
 
 def display():
-    glClearColor(0.0, 1.0, 1.0, 1.0)
+    glClearColor(1.0, 1.0, 1.0, 1.0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     glutSwapBuffers()
@@ -80,17 +83,13 @@ def initOpenGL():
     glDepthFunc(GL_LEQUAL)
 
 
+app = None
 def initApplication():
     if len(sys.argv) != 3:
-        raise Exception("Format: python <csvFile> <imagesLocation>") 
+        raise Exception("Format: python <csvFile> <imagesLocation>")
 
-    csvLocation = sys.argv[1]
-    imagesLocation = sys.argv[2]
-
-    with open(csvLocation) as csvFile:
-        for row in csv.DictReader(csvFile):
-            print(row)
-
+    global app
+    app = Application(sys.argv[1], sys.argv[2])
 
 def main():
     initGLUT()

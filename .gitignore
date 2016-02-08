@@ -3,6 +3,9 @@
 *.v12.suo
 *.pyproj.user
 
+*.pyc
+*.png
+
 *.csv
 
 [Ee]xample/
