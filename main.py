@@ -7,6 +7,8 @@ Created on Fri Feb 08 14:00:00 2016
 @author: Leonardo Nascimento
 """
 
+import sys, csv
+
 from OpenGL.GLUT import *
 from OpenGL.GL import *
 
@@ -24,8 +26,7 @@ def reshape(width, height):
 
 
 def keyboard(key, x, y):
-    if key == '\033':
-        sys.exit( )
+    pass
 
 
 def motion(x, y):
@@ -54,9 +55,22 @@ def initOpenGL():
     glDepthFunc(GL_LEQUAL)
 
 
+def initApplication():
+    if len(sys.argv) != 3:
+        raise Exception("Format: python <csvFile> <imagesLocation>") 
+
+    csvLocation = sys.argv[1]
+    imagesLocation = sys.argv[2]
+
+    with open(csvLocation) as csvFile:
+        for row in csv.DictReader(csvFile):
+            print(row)
+
+
 def main():
     initGLUT()
     initOpenGL()
+    initApplication()
 
     return glutMainLoop()
 
