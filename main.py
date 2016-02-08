@@ -7,15 +7,17 @@ Created on Fri Feb 08 14:00:00 2016
 @author: Leonardo Nascimento
 """
 
-import sys, csv
+import sys, csv, image
 
 from OpenGL.GLUT import *
 from OpenGL.GL import *
 
+
 WINDOW_SIZE = 1024, 768
 
+
 def display():
-    glClearColor(1.0, 1.0, 1.0, 1.0)
+    glClearColor(0.0, 1.0, 1.0, 1.0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     glutSwapBuffers()
@@ -26,7 +28,10 @@ def reshape(width, height):
 
 
 def keyboard(key, x, y):
-    pass
+    if key == "s":
+        screenShot()
+
+    glutPostRedisplay()
 
 
 def motion(x, y):
@@ -35,6 +40,26 @@ def motion(x, y):
 
 def mouse(button, state, x, y):
     pass
+
+
+def screenShot():
+    width = glutGet(GLUT_WINDOW_WIDTH)
+    height = glutGet(GLUT_WINDOW_HEIGHT)
+
+    # rgba data size
+    size = width * height * 4
+    
+    pixelBuffer = glGenBuffers(1)
+    glBindBuffer(GL_PIXEL_PACK_BUFFER, pixelBuffer)
+    glBufferData(GL_PIXEL_PACK_BUFFER, size, None, GL_STREAM_READ)
+    glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, c_void_p(0))
+    data = glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY)
+    
+    image.write(width, height, data, size)
+    
+    glUnmapBuffer(GL_PIXEL_PACK_BUFFER)
+    glBindBuffer(GL_PIXEL_PACK_BUFFER, 0)
+    glDeleteBuffers(1, [pixelBuffer])
 
 
 def initGLUT():
