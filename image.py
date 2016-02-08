@@ -12,7 +12,7 @@ from ctypes import string_at
 
 
 def read(path):
-    image = Image.open(imagePath)
+    image = Image.open(path)
     width = image.size[0]
     height = image.size[1]
     try:
