@@ -11,9 +11,6 @@ import csv
 
 from camera import Camera
 
-from pyramid import Pyramid
-from plane import Plane
-
 # data in meters
 film = { "35mm": { "width": 0.036, "height": 0.024 } }
 focalLength = 0.020
