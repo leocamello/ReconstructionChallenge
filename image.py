@@ -24,4 +24,5 @@ def read(path):
 
 def write(width, height, data, size):
     image = Image.fromstring("RGBA", (width, height), string_at(data, size))
+    image = image.transpose(Image.FLIP_TOP_BOTTOM)
     image.save("out.png", "PNG")
