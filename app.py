@@ -18,19 +18,26 @@ focalLength = 0.020
 
 class Application:
     def __init__(self, csvFile, imagesPath):
+
         self.cameras = []
 
         with open(csvFile) as cameraInfo:
             for info in csv.DictReader(cameraInfo):
                 camera = Camera(film['35mm'], focalLength, imagesPath + info['# Filename'])
                 camera.adjustRotation(float(info['Yaw']), float(info['Pitch']), float(info['Roll']))
-                camera.setPosition(float(info['X']), float(info['Y']), float(info['Z']))
-                #camera.initialize()
+                camera.setPosition(-float(info['X']), float(info['Y']), float(info['Z']))
+                camera.initialize()
 
                 self.cameras.append(camera)
 
+        self.center = self.cameras[0].position
 
-    def display(self):
-        pass
-    #    for camera in cameras:
-    #        camera.display()
+        for camera in self.cameras[1:]:
+            self.center += camera.position
+
+        self.center = self.center / len(self.cameras)
+
+
+    def display(self, width, height):
+        for camera in self.cameras:
+            camera.display(self.center, width, height)

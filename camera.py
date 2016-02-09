@@ -15,6 +15,17 @@ import matrix as mat
 from math import tan, atan
 from math import radians, degrees
 
+from pyramid import Pyramid
+from plane import Plane
+
+
+class Rectangle:
+    def __init__(self):
+        self.bottomLeft = np.array([-0.5, -0.5, 0.0], np.float32)
+        self.topLeft = np.array([-0.5, 0.5, 0.0], np.float32)
+        self.topRight = np.array([0.5, 0.5, 0.0], np.float32)
+        self.bottomRight = np.array([0.5, -0.5, 0.0], np.float32)
+
 
 class Camera:
     def __init__(self, filmSize, focalLength, imagePath):
@@ -70,3 +81,19 @@ class Camera:
         den = np.dot(normal, ray)
         t = num / den
         return self.position + t * ray
+
+
+    def initialize(self):
+        rect = Rectangle()
+        rect.bottomLeft = self.intersection(self.ray(0, 0))
+        rect.topLeft = self.intersection(self.ray(0, self.image['height']))
+        rect.topRight = self.intersection(self.ray(self.image['width'], self.image['height']))
+        rect.bottomRight = self.intersection(self.ray(self.image['width'], 0.0))
+        self.pyramid = Pyramid(self.position, rect)
+        self.plane = Plane(rect, self.image)
+
+
+    def display(self, center, width, height):
+        center = np.array([center[0], center[1], 250.0])
+        self.plane.draw(center, width, height)
+        self.pyramid.draw(center, width, height)
