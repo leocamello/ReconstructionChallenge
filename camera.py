@@ -28,34 +28,10 @@ class Camera:
         self.canvas = { "width": 0.0, "height": 0.0 }
         self.canvas['width'] = 2.0 * tan(self.fieldOfView['x'] / 2.0) * self.zPlane['near']
         self.canvas['height'] = 2.0 * tan(self.fieldOfView['y'] / 2.0) * self.zPlane['near']
-        # extrinsic parameters
-        self.position = np.array([0.0, 0.0, 0.0], np.float32)
-        self.center = np.array([0.0, 0.0, -1.0], np.float32)
-        self.up = np.array([0.0, 1.0, 0.0], np.float32)
         # coordinate system
-        self.coordSystem = { "x": np.array([0.0, 0.0, 0.0], np.float32),
-                             "y": np.array([0.0, 0.0, 0.0], np.float32),
-                             "z": np.array([0.0, 0.0, 0.0], np.float32) }
-        self.updateCoordSystem()
-
-
-    def adjustRotation(self, yaw, pitch, roll):
-        rotation = mat.rotation(yaw, pitch, roll)
-        self.position = mat.vec3(np.dot(rotation, mat.vec4(self.position)))
-        self.center = mat.vec3(np.dot(rotation, mat.vec4(self.center)))
-        self.up = mat.vec3(np.dot(rotation, mat.vec4(self.up)))
-        self.updateCoordSystem()
-
-
-    def setPosition(self, x, y, z):
-        self.position = np.array([x, y, z], np.float32)
-        self.updateCoordSystem()
-
-
-    def updateCoordSystem(self):
-        self.coordSystem['z'] = mat.normalize(self.position - self.center)
-        self.coordSystem['x'] = mat.normalize(np.cross(self.up, self.coordSystem['z']))
-        self.coordSystem['y'] = mat.normalize(np.cross(self.coordSystem['z'], self.coordSystem['x']))
+        self.coordSystem = { "x": np.array([1.0, 0.0, 0.0], np.float32),
+                             "y": np.array([0.0, 1.0, 0.0], np.float32),
+                             "z": np.array([0.0, 0.0, 1.0], np.float32) }
 
 
     def loadImage(self, imagePath):
@@ -63,6 +39,17 @@ class Camera:
         self.image['width'] = img[0]
         self.image['height'] = img[1]
         self.image['data'] = img[2]
+
+
+    def adjustRotation(self, yaw, pitch, roll):
+        rotation = mat.rotation(yaw, pitch, roll)
+        self.coordSystem['x'] = mat.vec3(np.dot(rotation, mat.vec4(self.coordSystem['x'])))
+        self.coordSystem['y'] = mat.vec3(np.dot(rotation, mat.vec4(self.coordSystem['y'])))
+        self.coordSystem['z'] = mat.vec3(np.dot(rotation, mat.vec4(self.coordSystem['z'])))
+
+
+    def setPosition(self, x, y, z):
+        self.position = np.array([x, y, z], np.float32)
 
 
     def ray(self, x, y):
@@ -74,3 +61,12 @@ class Camera:
         c = np.array(self.coordSystem['z'] * w)
         d = mat.normalize((a + b) + c)
         return d
+
+
+    def intersection(self, ray):
+        v0 = np.array([0.0, 0.0, 0.0], np.float32)
+        normal = np.array([0.0, 0.0, 0.1], np.float32)
+        num = np.dot(normal, v0 - self.position)
+        den = np.dot(normal, ray)
+        t = num / den
+        return self.position + t * ray
