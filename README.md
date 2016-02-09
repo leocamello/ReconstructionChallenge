@@ -2,7 +2,7 @@
 
 ## Reconstruction Challenge
 
-Coming soon...
+![Output](/out.png)
 
 ### Libraries
 
@@ -37,5 +37,8 @@ $ pip install pyopengl-accelerate
 To run the Reconstruction Challenge script:
 
 ```bash
-$ python main.py
+$ python main.py example.csv example/
 ```
+example.csv is the file with the cameras information.
+example/ is the directory where the images specified in the .csv are.
+
