@@ -93,7 +93,7 @@ class Camera:
         self.plane = Plane(rect, self.image)
 
 
-    def display(self, center, width, height):
-        center = np.array([center[0], center[1], 500.0])
-        self.plane.draw(center, width, height)
-        self.pyramid.draw(center, width, height)
+    def display(self, width, height, z, current=False, frustrum=False):
+        self.plane.draw(width, height, z)
+        if frustrum:
+            self.pyramid.draw(width, height, z, current)

@@ -20,7 +20,7 @@ WINDOW_SIZE = 1024, 768
 
 
 def display():
-    glClearColor(1.0, 1.0, 1.0, 1.0)
+    glClearColor(0.2, 0.3, 0.7, 1.0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     app.display(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT))
@@ -35,6 +35,15 @@ def reshape(width, height):
 def keyboard(key, x, y):
     if key == "s":
         screenShot()
+
+    if key == "n":
+        app.next()
+
+    if key == "p":
+        app.previous()
+
+    if key == "f":
+        app.frustrum()
 
     glutPostRedisplay()
 

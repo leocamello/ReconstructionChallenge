@@ -58,13 +58,13 @@ class Plane:
         self.initVertexArrayObject(rectangle)
 
 
-    def draw(self, center, width, height):
+    def draw(self, width, height, z):
         glUseProgram(self.shaderProgram)
         glActiveTexture(GL_TEXTURE0)
         glBindTexture(GL_TEXTURE_2D, self.texture)
         glUniform1i(self.locations["u_texture"], 0)
         glUniformMatrix4fv(self.locations["u_model"], 1, GL_TRUE, np.eye(4))
-        glUniformMatrix4fv(self.locations["u_view"], 1, GL_TRUE, mat.translation(-center))
+        glUniformMatrix4fv(self.locations["u_view"], 1, GL_TRUE, mat.translation(np.array([0.0, 0.0, -z], np.float32)))
         glUniformMatrix4fv(self.locations["u_projection"], 1, GL_TRUE, mat.perspective(45.0, float(width)/float(height), 0.1, 1000.0))
         glBindVertexArray(self.vertexArrayObject)
         glDrawArrays(GL_QUADS, 0, 4)
