@@ -23,6 +23,8 @@ def display():
     glClearColor(1.0, 1.0, 1.0, 1.0)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+    app.display()
+
     glutSwapBuffers()
 
 
@@ -32,7 +34,7 @@ def reshape(width, height):
 
 def keyboard(key, x, y):
     if key == "s":
-        screenShot()
+        app.screenShot()
 
     glutPostRedisplay()
 
@@ -70,7 +72,6 @@ def initGLUT():
     glutInitWindowSize(*WINDOW_SIZE)
     glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH)
     glutCreateWindow("DroneDeploy - Reconstruction Challenge")
-
     glutDisplayFunc(display)
     glutReshapeFunc(reshape)
     glutKeyboardFunc(keyboard)
@@ -90,6 +91,7 @@ def initApplication():
 
     global app
     app = Application(sys.argv[1], sys.argv[2])
+
 
 def main():
     initGLUT()
