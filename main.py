@@ -34,7 +34,7 @@ def reshape(width, height):
 
 def keyboard(key, x, y):
     if key == "s":
-        app.screenShot()
+        screenShot()
 
     glutPostRedisplay()
 

@@ -94,6 +94,6 @@ class Camera:
 
 
     def display(self, center, width, height):
-        center = np.array([center[0], center[1], 250.0])
+        center = np.array([center[0], center[1], 500.0])
         self.plane.draw(center, width, height)
         self.pyramid.draw(center, width, height)
