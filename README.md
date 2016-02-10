@@ -40,8 +40,12 @@ After successfully running the Reconstruction Challenge script a new window will
 
 ![](/out2.png)
 
-**N**: Selects the next camera | **P**: Selects the previous camera
--------------------------------|-------------------------------
-![](/out3.png)              |![](/out4.png)
+**N**: Selects the next camera
+
+![](/out3.png)
+
+**P**: Selects the previous camera
+
+![](/out4.png)
 
 **S**: Take an screenshot of the area being viewed in the window. The image file is saved as *out.png*. All screenshots for this document were taken with this feature.
