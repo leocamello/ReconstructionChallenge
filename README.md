@@ -2,8 +2,6 @@
 
 ## Reconstruction Challenge
 
-![Output](/out.png)
-
 ### Libraries
 
 - Numpy
@@ -29,3 +27,21 @@ To run the Reconstruction Challenge script:
 $ python main.py example.csv example/
 ```
 *example.csv* is the file with the cameras information and *example/* is the directory where the images specified in the .csv are.
+
+### Application
+
+After successfully running the Reconstruction Challenge script a new window will popup showing the **mosaic** that was created.
+
+![](/out1.png)
+
+#### Keyboard Shortcuts
+
+**F**: Enable or disable the frustum of the cameras. The selected camera's frustum is displayed in yellow.
+
+![](/output2.png)
+
+**N**: Selects the next camera | **P**: Selects the previous camera
+-------------------------------|-------------------------------
+![](/output3.png)              |![](/output4.png)
+
+**S**: Take an screenshot of the area being viewed in the window. The image file is saved as *out.png*. All screenshots for this document were taken with this feature.
