@@ -2,6 +2,8 @@
 
 ## Reconstruction Challenge
 
+![](/out3.png)
+
 ### Libraries
 
 - Numpy
