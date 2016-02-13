@@ -9,17 +9,13 @@ Created on Fri Feb 09 13:30:00 2016
 
 import math
 import numpy as np
+import pyproj
 
 
-earthRadius = 6371000
 def distance(lat1, lon1, lat2, lon2):
-    phi1 = math.radians(lat1)
-    phi2 = math.radians(lat2)
-    dPhi = math.radians(lat2 - lat1)
-    dTetha = math.radians(lon2 - lon1)
-    a = math.sin(dPhi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(dTetha / 2) ** 2
-    c = 2.0 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    return earthRadius * c
+    geod = pyproj.Geod(ellps="WGS84")
+    angle1, angle2, distance = geod.inv(lon1, lat1, lon2, lat2)
+    return distance
 
 
 class Info():

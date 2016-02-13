@@ -7,6 +7,7 @@
 ### Libraries
 
 - Numpy
+- PyProj
 - PyOpenGL
 - PyOpenGL-accelerate
 - Python Imaging Library (PIL)
@@ -19,6 +20,7 @@ To install PIL, PyOpenGL and PyOpenGL-accelerate:
 
 ```bash
 $ conda install pil
+$ conda install pyproj
 $ conda install pyopengl
 $ conda install pyopengl-accelerate
 ```
